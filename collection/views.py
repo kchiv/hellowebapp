@@ -8,5 +8,6 @@ from django.shortcuts import render
 def index(request):
 	# defining the variable
 	number = 6
+	thing = 'Thing name'
 	# passing the variable to the view
-	return render(request, 'collection/index.html', {'number': number})
+	return render(request, 'collection/index.html', {'number': number, 'thing': thing,})
