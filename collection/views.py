@@ -2,12 +2,10 @@
 from __future__ import unicode_literals
 
 from django.shortcuts import render
+from collection.models import Profile
 
 # Create your views here.
 
 def index(request):
-	# defining the variable
-	number = 6
-	thing = 'Thing name'
-	# passing the variable to the view
-	return render(request, 'collection/index.html', {'number': number, 'thing': thing,})
+	profiles = Profile.objects.all()
+	return render(request, 'collection/index.html', {'profiles': profiles,})
