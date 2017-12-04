@@ -6,4 +6,5 @@
 {% block content %}
 	<h1>{{ profile.name }}</h1>
 	<p>{{ profile.description }}</p>
+	<a href="{% url 'edit_profile' slug=profile.slug %}">Edit</a>
 {% endblock %}
