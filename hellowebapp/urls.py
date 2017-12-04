@@ -23,4 +23,5 @@ urlpatterns = [
     url(r'^$', views.index, name='home'),
     url(r'^about/$', TemplateView.as_view(template_name='collection/about.html'), name='about'),
     url(r'^contact/$', TemplateView.as_view(template_name='collection/contact.html'), name='contact'),
+    url(r'^profiles/(?P<slug>[-\w]+)/$', views.profile_detail, name='profile_detail'),
 ]
