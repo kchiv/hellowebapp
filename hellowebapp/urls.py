@@ -20,6 +20,7 @@ from collection import views
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
+    url(r'^accounts/', include('registration.backends.simple.urls')),
     url(r'^$', views.index, name='home'),
     url(r'^about/$', TemplateView.as_view(template_name='collection/about.html'), name='about'),
     url(r'^contact/$', TemplateView.as_view(template_name='collection/contact.html'), name='contact'),
