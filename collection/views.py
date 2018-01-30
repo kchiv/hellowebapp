@@ -1,6 +1,9 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
+from django.contrib.auth.decorators import login_required
+from django.http import Http404
+
 from django.template.defaultfilters import slugify
 from django.shortcuts import render, redirect
 
@@ -17,15 +20,25 @@ def profile_detail(request, slug):
 	profile = Profile.objects.get(slug=slug)
 	return render(request, 'collection/profile_detail.html', {'profile': profile,})
 
+@login_required
 def edit_profile(request, slug):
+	# grab the object
 	profile = Profile.objects.get(slug=slug)
-	form = ProfileForm(instance=profile)
+
+	# make sure logged in user is owner of object
+	if profile.user != request.user:
+		raise Http404
+
+	# set form we're using
+	form_class = ProfileForm
 
 	if request.method == 'POST':
-		form = ProfileForm(data=request.POST, instance=profile)
+		form = form_class(data=request.POST, instance=profile)
 		if form.is_valid():
 			form.save()
 			return redirect('profile_detail', slug=profile.slug)
+	else:
+		form = form_class(instance=profile)
 
 	return render(request, 'collection/edit_profile.html', {'profile': profile, 'form': form,})
 
