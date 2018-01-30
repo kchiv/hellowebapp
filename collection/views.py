@@ -66,3 +66,12 @@ def create_profile(request):
 	else:
 		form = form_class()
 	return redirect(request, 'collection/create_profile.html', {'form': form,})
+
+def browse_by_name(request, initial=None):
+	if initial:
+		profiles = Profile.objects.filter(name__istartswith=initial)
+		profiles = profiles.order_by('name')
+	else:
+		profiles = Profile.objects.all().order_by('name')
+
+	return render(request, 'search/search.html', {'profiles': profiles, 'initial': initial,})
